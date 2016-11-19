@@ -1,0 +1,17 @@
+/Users/redsun/Documents/GameDevelopmentFinalProject/final_project/Temp/bin/Debug/UnityEngine.dll
+/Users/redsun/Documents/GameDevelopmentFinalProject/final_project/Temp/bin/Debug/UnityEditor.dll
+/Users/redsun/Documents/GameDevelopmentFinalProject/final_project/Temp/bin/Debug/UnityEngine.UI.dll
+/Users/redsun/Documents/GameDevelopmentFinalProject/final_project/Temp/bin/Debug/UnityEngine.Networking.dll
+/Users/redsun/Documents/GameDevelopmentFinalProject/final_project/Temp/bin/Debug/Mono.Cecil.dll
+/Users/redsun/Documents/GameDevelopmentFinalProject/final_project/Temp/bin/Debug/Unity.SerializationLogic.dll
+/Users/redsun/Documents/GameDevelopmentFinalProject/final_project/Temp/bin/Debug/Unity.DataContract.dll
+/Users/redsun/Documents/GameDevelopmentFinalProject/final_project/Temp/bin/Debug/ICSharpCode.NRefactory.dll
+/Users/redsun/Documents/GameDevelopmentFinalProject/final_project/Temp/bin/Debug/Unity.UNetWeaver.dll
+/Users/redsun/Documents/GameDevelopmentFinalProject/final_project/Temp/bin/Debug/Unity.UNetWeaver.dll.mdb
+/Users/redsun/Documents/GameDevelopmentFinalProject/final_project/Temp/bin/Debug/Unity.CecilTools.dll
+/Users/redsun/Documents/GameDevelopmentFinalProject/final_project/Temp/bin/Debug/Mono.Cecil.Pdb.dll
+/Users/redsun/Documents/GameDevelopmentFinalProject/final_project/Temp/bin/Debug/Mono.Cecil.Mdb.dll
+/Users/redsun/Documents/GameDevelopmentFinalProject/final_project/Temp/bin/Debug/Assembly-CSharp.dll.mdb
+/Users/redsun/Documents/GameDevelopmentFinalProject/final_project/Temp/bin/Debug/Assembly-CSharp.dll
+/Users/redsun/Documents/GameDevelopmentFinalProject/final_project/obj/Debug/Assembly-CSharp.dll
+/Users/redsun/Documents/GameDevelopmentFinalProject/final_project/obj/Debug/Assembly-CSharp.dll.mdb
