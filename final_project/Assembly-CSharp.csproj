@@ -45,8 +45,14 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-     <Compile Include="Assets\Scripts\BackgroundController.cs" />
-     <Compile Include="Assets\Scripts\NinjaController.cs" />
+     <Compile Include="Assets\Scripts\Rewards\HealthController.cs" />
+     <Compile Include="Assets\Scripts\background\BackgroundController.cs" />
+     <Compile Include="Assets\Scripts\enemy\EnemyController.cs" />
+     <Compile Include="Assets\Scripts\enemy\EnemyFireController.cs" />
+     <Compile Include="Assets\Scripts\enemy\RandomEnemyController.cs" />
+     <Compile Include="Assets\Scripts\ninja\NinjaController.cs" />
+     <Compile Include="Assets\Scripts\platform\PlatformController.cs" />
+     <Compile Include="Assets\Scripts\weapons\NinjaBladeController.cs" />
  <Reference Include="UnityEngine.UI">
  <HintPath>/Applications/Unity/Unity.app/Contents/UnityExtensions/Unity/GUISystem/UnityEngine.UI.dll</HintPath>
  </Reference>
