@@ -17,14 +17,17 @@ public class NinjaController : MonoBehaviour {
 	//Ground Check Variables
 	public Transform checkLanded;
 	public float checkRadius;
+	public float fallDistance,xPos,yPos;
 	public LayerMask whatIsLand;
 	bool isLanded;
+	private GameObject lastSteppedOn;
 
+	Transform _lastSteppedOnTrans;
 	Animator anim;
 
 
 
-	private SpriteRenderer ren;
+	private SpriteRenderer ren,_rendLastSteppedOn;
 
 	private float speedWeapon;
 	private Rigidbody2D ninjaRigidbody;
@@ -32,14 +35,21 @@ public class NinjaController : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
+		
 		anim = GetComponent<Animator> ();
+
 
 		ninjaRigidbody=GetComponent<Rigidbody2D>();
 		anim.SetTrigger ("idle");
+
 	}
 
 	// Update is called once per frame
 	void FixedUpdate(){
+
+
+
+
 		isLanded = Physics2D.OverlapCircle (checkLanded.position,checkRadius,whatIsLand);
 		anim.ResetTrigger ("throw");
 
@@ -61,8 +71,16 @@ public class NinjaController : MonoBehaviour {
 
 		
 		direction = ren.flipX;
+
+
+		if (transform.position.y < fallDistance) {	
+			transform.position = new Vector2 (xPos, yPos); 
+			GameObject.FindGameObjectsWithTag ("life") [0].GetComponent<HealthController> ().removeLife ();
+		}
+
+
 		if (Input.GetKeyDown (KeyCode.RightArrow)) {
-			print ("run");
+			
 
 				
 			anim.SetTrigger ("run");
@@ -83,7 +101,7 @@ public class NinjaController : MonoBehaviour {
 		}
 
 		if (Input.GetKeyDown (KeyCode.LeftArrow)) {
-			print ("run");
+			
 	
 				anim.SetTrigger ("run");
 				anim.ResetTrigger ("idle");
@@ -111,6 +129,16 @@ public class NinjaController : MonoBehaviour {
 		}
 
 
+		if (Input.GetKeyDown (KeyCode.DownArrow)) {
+			if (!isLanded) {
+				anim.ResetTrigger ("idle");
+				anim.ResetTrigger ("run");
+				anim.SetBool ("landing", true);
+				ninjaRigidbody.AddForce(new Vector2(0,-jumpForce));
+				isLanded= false;
+			}
+		}
+
 		if (Input.GetKeyDown ("space")) {
 			anim.SetTrigger ("throw");
 			// Create a new weapon at “transform.position”
@@ -126,6 +154,12 @@ public class NinjaController : MonoBehaviour {
 			anim.SetTrigger ("idle");
 		}
 
+
+				
+					
+					
+				
+
 	}
 
 
@@ -134,14 +168,28 @@ public class NinjaController : MonoBehaviour {
 			transform.parent = other.transform;
 
 		}
+		lastSteppedOn = other.gameObject;
+		_lastSteppedOnTrans = lastSteppedOn.GetComponent<Transform> ();
+		_rendLastSteppedOn=lastSteppedOn.GetComponent<SpriteRenderer> ();
+		xPos=_lastSteppedOnTrans.position.x;
+		yPos=_lastSteppedOnTrans.position.y + _rendLastSteppedOn.bounds.size.y/2+GetComponent<SpriteRenderer>().bounds.size.y/2;
+//		print ("Last stepped Game Object Name: " + lastSteppedOn.name);
+//		+_rendLastSteppedOn.bounds.size.x/2+GetComponent<SpriteRenderer>().bounds.size.x/2 
 	}
 
 	void  OnTriggerExit2D ( Collider2D other  ){
 		if(other.gameObject.tag == "platform"){
 			transform.parent = null;
-
+//			lastSteppedOn = other.gameObject;
+//			print ("Last stepped Game Object Name: " + lastSteppedOn.name);
 		}
 	}    
+	void  OnTriggerEnter2D ( Collider2D other  ){
+		if(other.gameObject.tag == "potion"){
+//			print ("hit potion");
+			Destroy (other.gameObject);
+			GameObject.FindGameObjectsWithTag ("life") [0].GetComponent<HealthController> ().addLife ();
 
-
+		}
+	}
 } 

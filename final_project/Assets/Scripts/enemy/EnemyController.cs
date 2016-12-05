@@ -3,18 +3,9 @@ using System.Collections;
 
 public class EnemyController : MonoBehaviour {
 
-	public GameObject platform;
-
-	public float speed;
-
-	Transform _transform,platTrans;
-	float platX,platWidth,maxX,minX;
-
-	bool direction;
-	SpriteRenderer platRen,_renderer;
 
 	Animator ani;
-
+	public float speed;
 	//create rigid body component for enemies
 	private Rigidbody2D rigidbodyEnemy;
 
@@ -25,7 +16,7 @@ public class EnemyController : MonoBehaviour {
 	AudioSource audioEnemy;
 
 	//Gameobjects for "live" objects on the scene
-	private GameObject[] lives;
+//	private GameObject[] lives;
 
 	//points for connected enemies,obstacles or coin,
 	[SerializeField]
@@ -34,49 +25,27 @@ public class EnemyController : MonoBehaviour {
 	//Gameobjects for "live" objects on the scene
 	private GameObject[] scene;
 
+	HealthController health;
 
 
 	// Use this for initialization
 	void Start () {
 
 		// Get the rigidbody component
-		if (rigidbodyEnemy == null) rigidbodyEnemy = GetComponent<Rigidbody2D>();
+		 rigidbodyEnemy = GetComponent<Rigidbody2D>();
 		ani = GetComponent<Animator> ();
-
-		platTrans = platform.GetComponent<Transform> ();
-		platRen = platform.GetComponent<SpriteRenderer> ();
-		_renderer=GetComponent<SpriteRenderer> ();
-		_transform = gameObject.GetComponent<Transform> ();
-		direction = true;
-		platWidth = platRen.bounds.size.x;
-		maxX = platTrans.position.x + platWidth / 2-_renderer.bounds.size.x/2;
-		minX=platTrans.position.x -platWidth / 2+_renderer.bounds.size.x/2;
-
-
-		float randomX= Random.Range (minX, maxX);
-		_transform.position = new Vector2 (randomX,_transform.position.y);
+		audioEnemy = GetComponent<AudioSource> ();
+		health = GameObject.FindGameObjectsWithTag ("life") [0].GetComponent<HealthController> ();
 	}
 	
 	// Update is called once per frame
-	void Update () {
-
-		if (_transform.position.x < maxX && direction) {
-			rigidbodyEnemy.velocity = new Vector2(speed,0);
-
-		} else {
-			direction = false;
-			_renderer.flipX = false;
-		}
+	void FixedUpdate(){
 
 
-		if (_transform.position.x > minX && !direction) {
-			rigidbodyEnemy.velocity = new Vector2(-speed,0);
+		if(speed>0)
+		rigidbodyEnemy.velocity = new Vector2(speed,0);
 
-		} else {
-			direction = true;
-			_renderer.flipX = true;
-		}
-	
+
 	}
 
 	void  OnTriggerEnter2D (Collider2D gObj)
@@ -90,66 +59,72 @@ public class EnemyController : MonoBehaviour {
 		if (name == "ninja_blade(Clone)") {
 
 			// Destroy itself (the enemy) and the fireball but obstacles and coins
-//			if (enemyName == "coin(Clone)" || enemyName == "spike(Clone)" || enemyName == "spike_monster_A(Clone)" || enemyName == "spike_monster_B(Clone)") {
-//				//do nothing
-//
-//			} else //in case of collison with the birds
-//			{
+			if (gameObject.tag == "rewards") {
+				//do nothing
 
-			//play hit sound which is connected to the bird
-//				audioEnemy.PlayOneShot (hitsound);
-			//delay object destroy for a while to complete of the playing sound
-			//Destroy fireball
-			Object.Destroy (gObj.gameObject, 0.15f);
-			//destroy enemy(birds)
-			Destroy (gameObject, 2.0f);
-			gameObject.GetComponent<EnemyController> ().speed = 0;
+			} else { //in case of collison with the birds
 
-			ani.SetTrigger ("destroy");
-			//add points which is given to the bird
-//				Player.Instance.Points+=point;
+				//play hit sound which is connected to the bird
+				audioEnemy.PlayOneShot (hitsound);
+				//delay object destroy for a while to complete of the playing sound
+				//Destroy fireball
+				Object.Destroy (gObj.gameObject, 0.15f);
+				//destroy enemy(birds)
+//			rigidbodyEnemy.isKinematic=true;
+				Destroy (gameObject, 2.0f);
+				ani.SetTrigger ("destroy");
+				gameObject.GetComponent<EnemyController> ().speed = 0;
+				//add points which is given to the monster
+				Player.Instance.Points += point;
+
+			}
 
 		}
+
 
 		// If the enemy,obstcale or coin collided with the carzy_bullet
 		if (name == "ninja") {
 
-			// If the crazy_bullet collided with the obstacles
-//			if (enemyName == "spike(Clone)"||enemyName == "spike_monster_A(Clone)"||enemyName == "spike_monster_B(Clone)") {
-//				//play hit sound for spikes
-//				audioEnemy.PlayOneShot (hitsound);
-//				//go to method lifeCounter  to check the number of lives that carzy_bullet has
-//				lifeCounter (obj.gameObject);
-//
-//
-//			}
-//			else
-//			{
-			//if carzy_bullet hits coin
-			if (enemyName == "coin(Clone)") {
-				//play related hit sound
+				
+//			 If ninja collided with the monsters
+			if (gameObject.tag == "enemy") {
+				//play hit sound for spikes
 				audioEnemy.PlayOneShot (hitsound);
-				Object.Destroy (gameObject, 0.2f);
-				//add the points given to the coins
-//				Player.Instance.Points += point;
-			} else {
-				//if crazy_bullet collides with birds
-				//play hit sound for birds
-//				audioEnemy.PlayOneShot (hitsound);
-				//delay object destroy for a while to complete of the playing sound
-				Object.Destroy (gameObject, 0.15f);
 				//go to method lifeCounter  to check the number of lives that carzy_bullet has
-//				lifeCounter (obj.gameObject);
+				health.removeLife();
+
+
+			} else {
+//			if ninja hits the rewards
+				if (gameObject.tag == "rewards") {
+					//play related hit sound
+					audioEnemy.PlayOneShot (hitsound);
+					Object.Destroy (gameObject, 0.2f);
+					//	add the points given to the coins
+					Player.Instance.Points += point;
+				} else {
+					//if crazy_bullet collides with birds
+					//play hit sound for birds
+				audioEnemy.PlayOneShot (hitsound);
+					//delay object destroy for a while to complete of the playing sound
+					Object.Destroy (gameObject, 0.15f);
+					//go to method lifeCounter  to check the number of lives that carzy_bullet has
+					health.removeLife();
+
+
+				}
 
 
 			}
 
-//			}
-//
-//		}
-
-
 		}
 
+
+
+
 	}
+
+
+
+
 }

@@ -14,6 +14,7 @@ public class PlatformController : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
+		
 		frntRen = frontPlatform.GetComponent<SpriteRenderer> ();
 		bckRen = backPlatform.GetComponent<SpriteRenderer> ();
 		_renderer=GetComponent<SpriteRenderer> ();

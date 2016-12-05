@@ -34,17 +34,17 @@ public class EnemyFireController : MonoBehaviour {
 			baseFireTime = Time.time + Random.Range (fireRateMin, fireRateMax);
 			if (ninjaTrans.position.x < _transform.position.x && !_renderer.flipX) {
 				bullet.GetComponent<NinjaBladeController> ().speed = -Mathf.Abs (bullet.GetComponent<NinjaBladeController> ().speed);
-				fireBullet ();
+				OnBecameVisible();
 			} else if (ninjaTrans.position.x > _transform.position.x && _renderer.flipX) {
 				bullet.GetComponent<NinjaBladeController> ().speed = Mathf.Abs (bullet.GetComponent<NinjaBladeController> ().speed);
-				fireBullet ();
+				OnBecameVisible();
 			}
 
 
 		}
 
 	}
-	void fireBullet(){
+	void OnBecameVisible(){
 
 		//creates a bullet at the position of the enemy
 		Instantiate(bullet, transform.position, Quaternion.identity);
