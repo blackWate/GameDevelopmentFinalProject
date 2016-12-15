@@ -1,19 +1,25 @@
-﻿using UnityEngine;
+﻿//*Source            :EnemyBombController.cs
+//*Author            :Umit M.Karasu - 100938361  Ngoc Hieu Trinh - 100986583
+//*Last Modified by  :Umit M.Karasu
+//*Date last Modified:Dec 15, 2016
+//*Description       :it controls the dropping time and distance  of the bomb by calculating the distance
+//* between monster bird and ninja
+//*Revision History  :https://github.com/blackWate/GameDevelopmentFinalProject/tree/master/final_project/Assets/Scripts/weapons
+
+using UnityEngine;
 using System.Collections;
 
 public class EnemyBombController : MonoBehaviour {
 
-	//speed variable of the fireball
+	//distance between monster bird and ninja
 	[SerializeField]
 	private float distance;
 
-
-
+	//the bomb game object
 	[SerializeField]
 	private GameObject weapon;
 
-
-
+	//bomb fired or not
 	[SerializeField]
 	bool fired;
 
@@ -27,12 +33,10 @@ public class EnemyBombController : MonoBehaviour {
 	// method called once when the fireball is created
 	void  Start (){
 		fired = false;
-
+		//get location of the ninja
 		ninja = GameObject.FindGameObjectWithTag ("ninja");
 		_ninjaTrans=ninja.GetComponent<Transform>();
-
-//		_weaponTrans = weapon.GetComponent<Transform> ();
-		 
+		//get location of the game object	 
 		transform = GetComponent<Transform> ();
 
 
@@ -44,8 +48,7 @@ public class EnemyBombController : MonoBehaviour {
 
 
 
-		// Make the bullet move right
-
+		// Make the bomb move
 		if(gameObject!=null||weapon!=null)
 		if (Mathf.Abs (_ninjaTrans.transform.position.x - transform.position.x) <distance && !fired )
 			dropBomb ();
@@ -53,16 +56,10 @@ public class EnemyBombController : MonoBehaviour {
 
 
 	}
-	// method called when the fireball goes out of the screen
-//	void  OnBecameInvisible (){
-//		// Destroy the bullet
-//		Destroy(gameObject);
-//	}
-	void dropBomb(){
-		// _targetTrans.position.x;
 
-		//drops a bomp at the position of the enemy
-//		print("bomb fired");
+	void dropBomb(){
+
+		//drops a bomp at the position of the ninja
 		Instantiate(weapon, transform.position, Quaternion.identity);
 		fired = true;
 	}

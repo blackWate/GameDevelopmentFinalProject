@@ -1,4 +1,11 @@
-﻿using UnityEngine;
+﻿//*Source            :SceneController.cs
+//*Author            :Umit M.Karasu - 100938361  Ngoc Hieu Trinh - 100986583
+//*Last Modified by  :Umit M.Karasu
+//*Date last Modified:Dec 15, 2016
+//*Description       :Scene Manager, it manages the scene navigation and , app quit
+//*Revision History  :https://github.com/blackWate/GameDevelopmentFinalProject/tree/master/final_project/Assets/Scripts
+
+using UnityEngine;
 using System.Collections;
 using UnityEngine.SceneManagement;
 

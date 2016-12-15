@@ -1,4 +1,12 @@
-﻿using UnityEngine;
+﻿//*Source            :EnemyController.cs
+//*Author            :Umit M.Karasu - 100938361  Ngoc Hieu Trinh - 100986583
+//*Last Modified by  :Ngoc Hieu Trinh
+//*Date last Modified:Dec 15, 2016
+//*EnemyController plays collision sounds, destroy objects which are gotten hit, or hit,add points or
+//*reduce the lives of the character
+//*Revision History  :https://github.com/blackWate/GameDevelopmentFinalProject/tree/master/final_project/Assets/Scripts/enemy
+
+using UnityEngine;
 using System.Collections;
 
 public class EnemyController : MonoBehaviour {

@@ -1,4 +1,12 @@
-﻿using UnityEngine;
+﻿//*Source            :Player.cs
+//*Author            :Umit M.Karasu - 100938361  Ngoc Hieu Trinh - 100986583
+//*Last Modified by  :Umit M.Karasu
+//*Date last Modified:Dec 15, 2016
+//*Description       : Player class have integer point variable and pointcontroller variable which is connected
+//* to the  text gameobject, any update of the instance of player points will be seen on the scene
+//*Revision History  :https://github.com/blackWate/GameDevelopmentFinalProject/tree/master/final_project/Assets/Scripts/Rewards
+
+using UnityEngine;
 using System.Collections;
 
 public class Player  {

@@ -1,4 +1,10 @@
-﻿using UnityEngine;
+﻿//*Source            :EnemyFireController.cs
+//*Author            :Umit M.Karasu - 100938361  Ngoc Hieu Trinh - 100986583
+//*Last Modified by  :Ngoc Hieu Trinh
+//*Date last Modified:Dec 15, 2016
+//*Description       :EnemyFireController gives an ability to the enemies to fire bullets randomly.
+//*Revision History  :https://github.com/blackWate/GameDevelopmentFinalProject/tree/master/final_project/Assets/Scripts/enemy
+using UnityEngine;
 using System.Collections;
 
 public class EnemyFireController : MonoBehaviour {
