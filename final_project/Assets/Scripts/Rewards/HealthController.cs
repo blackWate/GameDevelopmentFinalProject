@@ -53,10 +53,11 @@ public class HealthController: MonoBehaviour {
 			Destroy (GameObject.FindGameObjectWithTag ("ninja"));
 			//reset points to zero
 			Player.Instance.Points = 0;
-
+			//goto Game_end scene
+			print (GameObject.FindGameObjectWithTag("scene").name);
+			GameObject.FindGameObjectWithTag("scene").GetComponent<SceneController>().loadScene("Game_End");
 		} 
-			
-		
+
 
 			//goto Game_end scene
 			//			scene=GameObject.FindGameObjectsWithTag("scene");

@@ -21,13 +21,15 @@ public class EnemyBombController : MonoBehaviour {
 
 	Transform _ninjaTrans,transform;
 
-
+	GameObject ninja;
 
 
 	// method called once when the fireball is created
 	void  Start (){
 		fired = false;
-		_ninjaTrans=Camera.main.transform.parent;
+
+		ninja = GameObject.FindGameObjectWithTag ("ninja");
+		_ninjaTrans=ninja.GetComponent<Transform>();
 
 //		_weaponTrans = weapon.GetComponent<Transform> ();
 		 
@@ -44,7 +46,7 @@ public class EnemyBombController : MonoBehaviour {
 
 		// Make the bullet move right
 
-
+		if(gameObject!=null||weapon!=null)
 		if (Mathf.Abs (_ninjaTrans.transform.position.x - transform.position.x) <distance && !fired )
 			dropBomb ();
 		  
@@ -52,10 +54,10 @@ public class EnemyBombController : MonoBehaviour {
 
 	}
 	// method called when the fireball goes out of the screen
-	void  OnBecameInvisible (){
-		// Destroy the bullet
-		Destroy(gameObject);
-	}
+//	void  OnBecameInvisible (){
+//		// Destroy the bullet
+//		Destroy(gameObject);
+//	}
 	void dropBomb(){
 		// _targetTrans.position.x;
 

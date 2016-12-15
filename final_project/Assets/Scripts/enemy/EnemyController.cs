@@ -4,8 +4,9 @@ using System.Collections;
 public class EnemyController : MonoBehaviour {
 
 
-	Animator ani;
+
 	public float speed;
+
 	//create rigid body component for enemies
 	private Rigidbody2D rigidbodyEnemy;
 
@@ -18,15 +19,17 @@ public class EnemyController : MonoBehaviour {
 	//Gameobjects for "live" objects on the scene
 //	private GameObject[] lives;
 
-	//points for connected enemies,obstacles or coin,
+	//points related to enemies,obstacles or coin,
 	[SerializeField]
 	private int  point;
 
 	//Gameobjects for "live" objects on the scene
 	private GameObject[] scene;
 
+	//to control the lives
 	HealthController health;
-
+	//animation for collisions
+	Animator ani;
 
 	// Use this for initialization
 	void Start () {
@@ -42,7 +45,7 @@ public class EnemyController : MonoBehaviour {
 	void FixedUpdate(){
 
 
-		if(speed>0)
+		//give speed monsters
 		rigidbodyEnemy.velocity = new Vector2(speed,0);
 
 
@@ -51,7 +54,6 @@ public class EnemyController : MonoBehaviour {
 	void  OnTriggerEnter2D (Collider2D gObj)
 	{
 		// Get the name of the object that collided with the enemy
-		//get the name of the fireball or crazy_bullet
 		string name = gObj.gameObject.name;
 		//get the name/s of enemies,obstacles or coin
 		string enemyName = gameObject.name;
@@ -62,27 +64,26 @@ public class EnemyController : MonoBehaviour {
 			if (gameObject.tag == "rewards") {
 				//do nothing
 
-			} else { //in case of collison with the birds
-
+			} else { //in case of collison with the enemies
 				//play hit sound which is connected to the bird
 				audioEnemy.PlayOneShot (hitsound);
 				//delay object destroy for a while to complete of the playing sound
-				//Destroy fireball
+				//Destroy weapon
 				Object.Destroy (gObj.gameObject, 0.15f);
-				//destroy enemy(birds)
-//			rigidbodyEnemy.isKinematic=true;
+				//destroy enemy(monsters)
 				Destroy (gameObject, 2.0f);
+				//play explosion animation
+
 				ani.SetTrigger ("destroy");
 				gameObject.GetComponent<EnemyController> ().speed = 0;
-				//add points which is given to the monster
+				//add points which is value of  the monster
 				Player.Instance.Points += point;
-
 			}
 
 		}
 
 
-		// If the enemy,obstcale or coin collided with the carzy_bullet
+		// If the enemy or rewards collided with ninja
 		if (name == "ninja") {
 
 				
@@ -90,7 +91,7 @@ public class EnemyController : MonoBehaviour {
 			if (gameObject.tag == "enemy") {
 				//play hit sound for spikes
 				audioEnemy.PlayOneShot (hitsound);
-				//go to method lifeCounter  to check the number of lives that carzy_bullet has
+				//go to method lifeCounter  to check the number of lives 
 				health.removeLife();
 
 
@@ -100,15 +101,15 @@ public class EnemyController : MonoBehaviour {
 					//play related hit sound
 					audioEnemy.PlayOneShot (hitsound);
 					Object.Destroy (gameObject, 0.2f);
-					//	add the points given to the coins
+					//	add the points given to the related reward
 					Player.Instance.Points += point;
 				} else {
-					//if crazy_bullet collides with birds
-					//play hit sound for birds
+					//if ninja collides with monsters
+					//play hit sound for enemies
 				audioEnemy.PlayOneShot (hitsound);
 					//delay object destroy for a while to complete of the playing sound
 					Object.Destroy (gameObject, 0.15f);
-					//go to method lifeCounter  to check the number of lives that carzy_bullet has
+					//remove the life
 					health.removeLife();
 
 
@@ -123,7 +124,6 @@ public class EnemyController : MonoBehaviour {
 
 
 	}
-
 
 
 

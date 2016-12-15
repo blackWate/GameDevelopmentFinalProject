@@ -21,11 +21,11 @@ public class NinjaController : MonoBehaviour {
 	public LayerMask whatIsLand;
 	bool isLanded;
 	private GameObject lastSteppedOn;
-
+	float ninjaLPos;
 	Transform _lastSteppedOnTrans;
 	Animator anim;
 
-
+	public float move;
 
 	private SpriteRenderer ren,_rendLastSteppedOn;
 
@@ -41,14 +41,25 @@ public class NinjaController : MonoBehaviour {
 
 		ninjaRigidbody=GetComponent<Rigidbody2D>();
 		anim.SetTrigger ("idle");
+	   move = 0;
 
 	}
 
 	// Update is called once per frame
 	void FixedUpdate(){
 
+		if (GetComponent<Transform> ().position.x < -13.2f) {
+			Vector2 xBound = new Vector2 (-13.2f,0);
+			GetComponent<Transform> ().position = xBound;
+		}
 
 
+
+		if (GetComponent<Transform> ().position.x >782.66f) {
+			Vector2 xBound = new Vector2 (-13.2f,0);
+			GetComponent<Transform> ().position = xBound;
+			GameObject.FindGameObjectWithTag("scene").GetComponent<SceneController>().loadScene("You_Won");
+		}
 
 		isLanded = Physics2D.OverlapCircle (checkLanded.position,checkRadius,whatIsLand);
 		anim.ResetTrigger ("throw");
@@ -78,11 +89,9 @@ public class NinjaController : MonoBehaviour {
 			GameObject.FindGameObjectsWithTag ("life") [0].GetComponent<HealthController> ().removeLife ();
 		}
 
-
-		if (Input.GetKeyDown (KeyCode.RightArrow)) {
-			
-
-				
+		//move right
+		if (Input.GetKey (KeyCode.RightArrow)) {
+			moveBackground("r");
 			anim.SetTrigger ("run");
 			anim.ResetTrigger ("idle");
 			ren.flipX = false;
@@ -91,26 +100,21 @@ public class NinjaController : MonoBehaviour {
 
 
 		if (Input.GetKeyUp (KeyCode.RightArrow)) {
-			
 				anim.ResetTrigger ("run");
 				anim.SetTrigger ("idle");
 				ninjaRigidbody.velocity = new Vector2 (0, 0);
-
-
-
 		}
 
-		if (Input.GetKeyDown (KeyCode.LeftArrow)) {
-			
-	
-				anim.SetTrigger ("run");
-				anim.ResetTrigger ("idle");
-				ren.flipX = true;
-				ninjaRigidbody.velocity = new Vector2 (-speed, 0);
-			
-				
-			
+		//move left
+		if (Input.GetKey (KeyCode.LeftArrow)) {
+			moveBackground ("l");
+			anim.SetTrigger ("run");
+			anim.ResetTrigger ("idle");
+			ren.flipX = true;
+			ninjaRigidbody.velocity = new Vector2 (-speed, 0);
 		}
+			
+
 		if (Input.GetKeyUp (KeyCode.LeftArrow)) {
 			anim.ResetTrigger ("run");
 			anim.SetTrigger ("idle");
@@ -124,7 +128,6 @@ public class NinjaController : MonoBehaviour {
 				anim.ResetTrigger ("run");
 				anim.SetTrigger ("jump");
 			ninjaRigidbody.AddForce(new Vector2(0,jumpForce));
-				isLanded= false;
 			}
 		}
 
@@ -135,7 +138,6 @@ public class NinjaController : MonoBehaviour {
 				anim.ResetTrigger ("run");
 				anim.SetBool ("landing", true);
 				ninjaRigidbody.AddForce(new Vector2(0,-jumpForce));
-				isLanded= false;
 			}
 		}
 
@@ -145,7 +147,7 @@ public class NinjaController : MonoBehaviour {
 			// Which is the current position of the ninja
 			if (direction)
 				weapon.GetComponent<NinjaBladeController> ().speed = -Mathf.Abs (weapon.GetComponent<NinjaBladeController> ().speed);
-			if (!direction)
+			else//if (!direction)
 				weapon.GetComponent<NinjaBladeController> ().speed = Mathf.Abs (weapon.GetComponent<NinjaBladeController> ().speed);
 			Instantiate (weapon, transform.position, Quaternion.identity);
 		}
@@ -158,7 +160,7 @@ public class NinjaController : MonoBehaviour {
 				
 					
 					
-				
+		ninjaLPos = GetComponent<Transform> ().position.x;	
 
 	}
 
@@ -183,6 +185,9 @@ public class NinjaController : MonoBehaviour {
 //			lastSteppedOn = other.gameObject;
 //			print ("Last stepped Game Object Name: " + lastSteppedOn.name);
 		}
+
+
+
 	}    
 	void  OnTriggerEnter2D ( Collider2D other  ){
 		if(other.gameObject.tag == "potion"){
@@ -190,6 +195,31 @@ public class NinjaController : MonoBehaviour {
 			Destroy (other.gameObject);
 			GameObject.FindGameObjectsWithTag ("life") [0].GetComponent<HealthController> ().addLife ();
 
+		}
+
+		if(other.gameObject.tag == "enemyBullet"){
+			//			print ("hit potion");
+			Destroy (other.gameObject);
+			GameObject.FindGameObjectsWithTag ("life") [0].GetComponent<HealthController> ().removeLife ();
+
+		}
+	}
+	void moveBackground(string direction)
+	{
+		if (GetComponent<Transform> ().position.x != ninjaLPos) {
+
+			if (direction == "l") {
+				if (move < -1)
+					move = 0;
+
+				move -= 0.002f;
+			} else {
+				if (move == 1)
+					move = 0;
+
+				move += 0.002f;
+
+			}
 		}
 	}
 } 

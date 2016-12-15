@@ -18,7 +18,7 @@ public class PlatformCheck : MonoBehaviour {
 	}
 	void  OnTriggerStay2D (Collider2D obj){
 		
-		if (obj.tag == "enemy" ) {
+		if (obj.tag == "enemy") {
 			IsEnemy = true;
 			obj.gameObject.GetComponent<EnemyPlatformController> ().platform = gameObject;
 		} 
